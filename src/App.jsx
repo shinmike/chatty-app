@@ -24,7 +24,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('Rendering <App />');
     return (
       <div>
         <nav className="navbar">
@@ -34,7 +33,7 @@ class App extends React.Component {
         <ChatBar currentUser={this.state.currentUser.name} />
       </div>
     );
-  } // render
+  }
 
 }
 

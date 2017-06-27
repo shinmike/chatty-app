@@ -1,8 +1,8 @@
 import React from 'react';
 
 class ChatBar extends React.Component {
+
   render() {
-    console.log('Rendering <ChatBar />');
     return (
       <footer className="chatbar">
         <input className="chatbar-username" defaultValue={this.props.currentUser} />
@@ -10,6 +10,7 @@ class ChatBar extends React.Component {
       </footer>
     );
   }
+
 }
 
 export default ChatBar;

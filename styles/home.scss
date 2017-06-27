@@ -57,6 +57,7 @@ body {
 
 .message-content {
   flex: 8;
+  padding-bottom: 5px; // added to get prevent message cut-off
 }
 
 .message-username {
