@@ -25,6 +25,7 @@ class App extends React.Component {
 
   render() {
     return (
+
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
@@ -32,6 +33,7 @@ class App extends React.Component {
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser.name} />
       </div>
+      
     );
   }
 

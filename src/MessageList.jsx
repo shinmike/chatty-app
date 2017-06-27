@@ -5,6 +5,7 @@ class MessageList extends React.Component {
 
   render() {
     return (
+
       <div>
         {this.props.messages.map((message) => {
           return (
@@ -16,6 +17,7 @@ class MessageList extends React.Component {
           );
         })}
       </div>
+      
     );
   }
 
