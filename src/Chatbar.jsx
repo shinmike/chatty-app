@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class ChatBar extends Component {
+class ChatBar extends React.Component {
   render() {
     return (
       <footer className="chatbar">

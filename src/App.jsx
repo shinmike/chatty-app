@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Message from './Message.jsx';
 import ChatBar from './ChatBar.jsx';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div>

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import MessageList from './MessageList.jsx';
 
-class Message extends Component {
+class Message extends React.Component {
   render() {
     return (
       <main className="messages">

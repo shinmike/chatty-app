@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class MessageList extends Component {
+class MessageList extends React.Component {
   render() {
     return (
       <div>
