@@ -4,16 +4,18 @@ import ChatBar from './ChatBar.jsx';
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
+  constructor(props) { // constructing state
+    super(props); // allow children to access props from state
+    this.state = { // parent's state listed
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
         {
+          id: 1,
           username: "Bob",
           content: "Has anyone seen my marbles?",
         },
         {
+          id: 2,
           username: "Anonymous",
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
@@ -28,7 +30,7 @@ class App extends React.Component {
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
-        <MessageList />
+        <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser.name} />
       </div>
     );

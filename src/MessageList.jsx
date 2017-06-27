@@ -6,7 +6,7 @@ class MessageList extends React.Component {
     console.log('Rendering <MessageList />');
     return (
       <main className="messages">
-          <Message />
+        <Message messages={this.props.messages} />
       </main>
     );
   }
