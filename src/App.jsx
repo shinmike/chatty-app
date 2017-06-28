@@ -24,17 +24,8 @@ class App extends React.Component {
 
     this.socket = new WebSocket("ws://localhost:3001");
 
-    this.showNewMessage = this.showNewMessage.bind(this);
+    this.sendMessageToServer = this.sendMessageToServer.bind(this);
     
-  }
-
-  showNewMessage(newMessage) {
-    const message = this.state.messages.concat({
-      id: Math.random(),
-      username: this.state.currentUser.name,
-      content: newMessage
-    });
-    this.setState({messages: message});
   }
 
   componentDidMount() {
@@ -44,6 +35,18 @@ class App extends React.Component {
     }
   }
 
+  sendMessageToServer(newMessage) {
+    console.log('Message to server is', newMessage);
+    const message = {
+      id: Math.random(),
+      username: this.state.currentUser.name,
+      content: newMessage
+    } // creating the new user's id, username, content
+    this.socket.send(JSON.stringify(message)); // send to server
+    const allMessages = this.state.messages.concat(message); // concatenates new message to exisiting messages
+    this.setState({messages: allMessages}); //sets updated messages
+  }		   
+
   render() {
     console.log("rendering <App />");
     return (
@@ -52,7 +55,7 @@ class App extends React.Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} showNewMessage={this.showNewMessage} />
+        <ChatBar currentUser={this.state.currentUser.name} handleSubmit={this.sendMessageToServer} />
       </div>
     );
   }
