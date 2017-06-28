@@ -10,10 +10,12 @@ class App extends React.Component {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
         {
+          id: 1,
           username: "Bob",
           content: "Has anyone seen my marbles?",
         },
         {
+          id: 2,
           username: "Anonymous",
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
@@ -26,6 +28,7 @@ class App extends React.Component {
 
   showNewMessage(newMessage) {
     const message = this.state.messages.concat({
+      id: Math.random(),
       username: this.state.currentUser.name,
       content: newMessage
     });
