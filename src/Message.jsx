@@ -4,7 +4,6 @@ class Message extends React.Component {
 
   render() {
     return (
-
       <div>
         <span className="message-username">{this.props.username}</span>
         <span className="message-content">{this.props.content}</span>
@@ -13,7 +12,6 @@ class Message extends React.Component {
           {/*Anonymous1 changed their name to nomnom.*/}
         </div>
       </div>
-      
     );
   }
 

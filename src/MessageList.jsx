@@ -5,10 +5,9 @@ class MessageList extends React.Component {
 
   render() {
     return (
-
       <div>
         {this.props.messages.map((message) => {
-          return (
+          return ( // return messages array (in App.jsx) and loop
             <div className="message" key={message.id}>
               <main className="messages">
                 <Message username={message.username} content={message.content} />
@@ -17,7 +16,6 @@ class MessageList extends React.Component {
           );
         })}
       </div>
-      
     );
   }
 
