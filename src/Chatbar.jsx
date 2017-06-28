@@ -10,6 +10,7 @@ class ChatBar extends React.Component {
   }
 
   render() {
+    console.log("rendering <Chatbar />");
     return (
       <footer className="chatbar">
         <input className="chatbar-username" defaultValue={this.props.currentUser} />
