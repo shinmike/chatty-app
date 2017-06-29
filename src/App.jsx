@@ -12,23 +12,15 @@ class App extends React.Component {
     };
 
     this.socket = new WebSocket("ws://localhost:3001");
-    
-    this.socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      const newState = this.state.messages.concat(message); // concatenates new message to exisiting messages
-      this.setState({ messages: newState }); //sets updated messages
-    };
 
+    this.changeCurrentUser = this.changeCurrentUser.bind(this);
     this.sendMessageToServer = this.sendMessageToServer.bind(this);
-    
+ 
   }
 
-  componentDidMount() {
-    console.log("componentDidMount <App />");
-    this.socket.onopen = () => {
-      console.log('Connected to server');
-    }
-  }
+  changeCurrentUser(newUsername) {
+    this.setState({ currentUser: {name: newUsername} });
+  }	 
 
   sendMessageToServer(newMessage) {
     console.log('Message to server is', newMessage);
@@ -37,9 +29,21 @@ class App extends React.Component {
       content: newMessage
     } 
     this.socket.send(JSON.stringify(message)); // send to server
-    // const allMessages = this.state.messages.concat(message); 
-    // this.setState({messages: allMessages}); 
-  }		   
+  }	
+
+  componentDidMount() {
+    console.log("componentDidMount <App />");
+    
+    this.socket.onopen = () => {
+      console.log('Connected to server');
+    }
+
+    this.socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      const newState = this.state.messages.concat(message); // concatenates new message to exisiting messages
+      this.setState({ messages: newState }); //sets updated messages
+    };
+  }  
 
   render() {
     console.log("rendering <App />");
@@ -48,8 +52,14 @@ class App extends React.Component {
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
-        <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} handleSubmit={this.sendMessageToServer} />
+        <MessageList 
+          messages={this.state.messages} 
+        />
+        <ChatBar 
+          currentUser={this.state.currentUser.name} 
+          handleSubmit={this.sendMessageToServer} 
+          handleNewUsername={this.changeCurrentUser} 
+        />
       </div>
     );
   }

@@ -1,6 +1,10 @@
 import React from 'react';
 
 class ChatBar extends React.Component {
+  
+  handleSubmitName(event) {
+    this.props.handleNewUsername(event.target.value);
+  }
 
   handleSubmitChat(event) {  
     if (event.key === "Enter") {
@@ -13,8 +17,16 @@ class ChatBar extends React.Component {
     console.log("rendering <Chatbar />");
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" defaultValue={this.props.currentUser} />
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.handleSubmitChat.bind(this)}/>
+        <input 
+          className="chatbar-username" 
+          defaultValue={this.props.currentUser}
+          onKeyPress={this.handleSubmitName.bind(this)} 
+        />
+        <input 
+          className="chatbar-message" 
+          placeholder="Type a message and hit ENTER" 
+          onKeyPress={this.handleSubmitChat.bind(this)}
+        />
       </footer>
     );
   }
