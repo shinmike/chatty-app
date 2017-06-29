@@ -24,8 +24,18 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (message) => {
     const newMessage = JSON.parse(message);
-    newMessage.id = uuidv1();
-    wss.broadcast(JSON.stringify(newMessage));
+
+    if (newMessage.type === "postNotification") {
+      newMessage.id = uuidv1();
+      newMessage.type = "incomingNotification";
+      wss.broadcast(JSON.stringify(newMessage));
+    }
+    
+    if (newMessage.type === "postMessage") {
+      newMessage.id = uuidv1();
+      newMessage.type = "incomingMessage";
+      wss.broadcast(JSON.stringify(newMessage));
+    }
   });
   
   ws.on('close', () => console.log('Client disconnected'));
