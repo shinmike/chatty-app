@@ -19,8 +19,19 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
+
+
+function broadcast() {
+  let userCount = {
+    type: 'clientCount',
+    count: wss.clients.size
+  }
+  wss.broadcast(JSON.stringify(userCount));
+}
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  broadcast();
 
   ws.on('message', (message) => {
     const newMessage = JSON.parse(message);
@@ -38,5 +49,8 @@ wss.on('connection', (ws) => {
     }
   });
   
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => 
+    console.log('Client disconnected');
+    broadcast();
+    );
 });

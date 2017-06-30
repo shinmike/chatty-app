@@ -7,9 +7,9 @@ class App extends React.Component {
   constructor(props) { // constructing state
     super(props); // allow children to access props from this parent state
     this.state = { // parent's state listed
-      currentUser: {name: "Mike"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [], // messages coming from the server will be stored here as they arrive
-      notification: '' 
+      currentUser: {name: "Mike"},
+      messages: [],
+      count: 0
     };
 
     this.changeCurrentUser = this.changeCurrentUser.bind(this);
@@ -19,7 +19,14 @@ class App extends React.Component {
 
   // this.props.handleNewUsername in ChatBar  
   changeCurrentUser(newUsername) {
+    let previousUsername = this.state.currentUser.name;
     this.setState({ currentUser: {name: newUsername} });
+    const newNotification = {
+      type: "postNotification",
+      username: null,
+      content: `User ${previousUsername} changed their name to ${newUsername}`
+    } 
+    this.socket.send(JSON.stringify(newNotification));
   }	 
 
   // this.props.handleSubmit in ChatBar
@@ -46,22 +53,29 @@ class App extends React.Component {
       const data = JSON.parse(event.data);
 
       switch(data.type) {
+
       case "incomingMessage":
         console.log("Entering", data.type);
         const messages = this.state.messages.concat(data); // concatenates new message to exisiting messages
         this.setState({ messages: messages }); //sets updated messages
         break;
+
       case "incomingNotification":
         console.log("Entering", data.type);
-        const notifications = this.state.messages.concat(data); // concatenates new message to exisiting messages
-        this.setState({ messages: notifications });
+        const notification = this.state.messages.concat(data); // concatenates new message to exisiting messages
+        this.setState({ messages: notification });
         break;
+
+      case "clientCount":
+        console.log("Entering", data.type);
+        const updateCount = data.count; 
+        this.setState({ count: updateCount });
+      break;
+      
       default:
-        // show an error in the console if the message type is unknown
-        throw new Error("Unknown event type??? " + data.type);
+        throw new Error("Unknown event type??? " + data.type); // show an error in the console if the message type is unknown
       }
 
-      
     };
   }  
 
@@ -71,10 +85,10 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Shinapp 👏</a>
+          <p>Count: {this.state.count}</p>
         </nav>
         <MessageList 
           messages={this.state.messages} 
-          notification={this.state.notifcation}
         />
         <ChatBar 
           currentUser={this.state.currentUser.name} 

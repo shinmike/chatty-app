@@ -4,10 +4,10 @@ class ChatBar extends React.Component {
   
   handleSubmitName(event) {
     if (event.key === "Enter") {
-      const type = "postNotification";
+      // const type = "postNotification";
       const newUsername = event.target.value;
-      const notificationMessage = `User ${this.props.currentUser} changed their name to ${newUsername}`;
-      this.props.handleSubmit(notificationMessage, type);
+      // const notificationMessage = `User ${this.props.currentUser} changed their name to ${newUsername}`;
+      // this.props.handleSubmit(notificationMessage, type);
       this.props.handleNewUsername(newUsername);
     } 
   }

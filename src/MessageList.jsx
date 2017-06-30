@@ -12,6 +12,7 @@ class MessageList extends React.Component {
             return ( // return messages array (in App.jsx) and loop
               <div key={message.id}>
                 <Message 
+                  type={message.type}
                   username={message.username} 
                   content={message.content} 
                 />
@@ -19,11 +20,11 @@ class MessageList extends React.Component {
             );
           })
         }
-        <div className="message system">
+        {/*<div className="message system">
           { 
-            (this.props.notification) ? this.props.notification : null 
+            (this.props.notification) ? this.props.notification : null // ??????
           }
-        </div>  
+        </div>  */}
       </main>
     );
   }
