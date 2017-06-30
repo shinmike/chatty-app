@@ -19,8 +19,6 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
-
-
 function broadcast() {
   let userCount = {
     type: 'clientCount',

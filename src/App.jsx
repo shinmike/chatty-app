@@ -71,7 +71,7 @@ class App extends React.Component {
         const updateCount = data.count; 
         this.setState({ count: updateCount });
       break;
-      
+
       default:
         throw new Error("Unknown event type??? " + data.type); // show an error in the console if the message type is unknown
       }
@@ -85,7 +85,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Shinapp 👏</a>
-          <p>Count: {this.state.count}</p>
+          <p className="navbar-count">{this.state.count} users online</p>
         </nav>
         <MessageList 
           messages={this.state.messages} 
