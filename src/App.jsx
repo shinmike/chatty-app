@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) { // constructing state
     super(props); // allow children to access props from this parent state
     this.state = { // parent's state listed
-      currentUser: {name: 'Mike', color: 'black'},
+      currentUser: {name: 'Mike', color: ''},
       messages: [],
       count: 0
     };
@@ -22,19 +22,19 @@ class App extends React.Component {
     const previousUsername = this.state.currentUser.name;
     this.setState({ currentUser: {name: newUsername} });
     const newNotification = {
-      type: "postNotification",
-      username: null,
+      type: 'postNotification',
+      username: this.state.currentUser.name,
+      color: this.state.currentUser.color,
       content: `User ${previousUsername} changed their name to ${newUsername}`
     } 
     this.socket.send(JSON.stringify(newNotification));
   }	 
 
   // this.props.handleSubmit in ChatBar
-  sendMessageToServer(message, type) {
-    console.log("Type of message is", type);
-    console.log("Message to server is", message);
+  sendMessageToServer(message) {
+    console.log('Message to server is', message);
     const newMessage = {
-      type: type,
+      type: 'postMessage',
       username: this.state.currentUser.name,
       color: this.state.currentUser.color,
       content: message
@@ -57,27 +57,38 @@ class App extends React.Component {
 
       case "incomingMessage":
         console.log("Entering", data.type);
-        const messages = this.state.messages.concat(data); // concatenates new message to exisiting messages
-        this.setState({ messages: messages }); //sets updated messages
-        break;
+        const messages = this.state.messages.concat(data); 
+        this.setState({ messages: messages });
+        this.setState({
+          currentUser: {name: this.state.currentUser.name, color: data.color}
+        })
+      break;
 
       case "incomingNotification":
         console.log("Entering", data.type);
-        const notification = this.state.messages.concat(data); // concatenates new message to exisiting messages
+        const notification = this.state.messages.concat(data); 
         this.setState({ messages: notification });
-        break;
+        this.setState({
+          currentUser: {name: this.state.currentUser.name, color: data.color}
+        })
+      break;
 
       case "clientCount":
         console.log("Entering", data.type);
         const updateCount = data.count; 
         this.setState({ count: updateCount });
-        if (this.state.currentUser.color === 'black') {
-          this.setState({
-            currentUser: {name: this.state.currentUser.name, color: data.color}
-          })
-        }
-        console.log("THIS IS THE CURRENT COLOR!", this.state.currentUser.color);
       break;
+
+
+
+      case "clientColor":
+        console.log("Entering", data.type);
+        this.setState({
+          currentUser: {name: this.state.currentUser.name, color: data.color}
+        })
+      break;
+
+
 
       default:
         throw new Error("Unknown event type??? " + data.type); // show an error in the console if the message type is unknown

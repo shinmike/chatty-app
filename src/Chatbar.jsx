@@ -11,9 +11,8 @@ class ChatBar extends React.Component {
 
   handleSubmitChat(event) {  
     if (event.key === "Enter") {
-      const type = "postMessage";
       const newMessage = event.target.value;
-      this.props.handleSubmit(newMessage, type);
+      this.props.handleSubmit(newMessage);
       event.target.value = "";
     }
   }

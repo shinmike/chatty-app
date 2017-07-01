@@ -21,11 +21,6 @@ class MessageList extends React.Component {
             );
           })
         }
-        {/*<div className="message system">
-          { 
-            (this.props.notification) ? this.props.notification : null // ??????
-          }
-        </div>  */}
       </main>
     );
   }
