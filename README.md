@@ -13,7 +13,7 @@ Many of the web applications that you use today have real-time functionality whe
 
 ## Final Product
 
-!["Screenshot of app"](https://github.com/shinmike/tweetr2/blob/master/docs/home.png)
+!["Screenshot of app"](https://github.com/shinmike/chatty-app/blob/master/docs/shinapp-ui.png)
 
 ### Dependencies
 
