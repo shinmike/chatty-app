@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) { // constructing state
     super(props); // allow children to access props from this parent state
     this.state = { // parent's state listed
-      currentUser: {name: "Mike"},
+      currentUser: {name: 'Mike', color: 'black'},
       messages: [],
       count: 0
     };
@@ -19,7 +19,7 @@ class App extends React.Component {
 
   // this.props.handleNewUsername in ChatBar  
   changeCurrentUser(newUsername) {
-    let previousUsername = this.state.currentUser.name;
+    const previousUsername = this.state.currentUser.name;
     this.setState({ currentUser: {name: newUsername} });
     const newNotification = {
       type: "postNotification",
@@ -36,6 +36,7 @@ class App extends React.Component {
     const newMessage = {
       type: type,
       username: this.state.currentUser.name,
+      color: this.state.currentUser.color,
       content: message
     } 
     this.socket.send(JSON.stringify(newMessage)); // send to server
@@ -70,6 +71,12 @@ class App extends React.Component {
         console.log("Entering", data.type);
         const updateCount = data.count; 
         this.setState({ count: updateCount });
+        if (this.state.currentUser.color === 'black') {
+          this.setState({
+            currentUser: {name: this.state.currentUser.name, color: data.color}
+          })
+        }
+        console.log("THIS IS THE CURRENT COLOR!", this.state.currentUser.color);
       break;
 
       default:
@@ -81,11 +88,12 @@ class App extends React.Component {
 
   render() {
     console.log("rendering <App />");
+    let userWord = this.state.count === 1 ? 'user' : 'users';
     return (
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Shinapp 👏</a>
-          <p className="navbar-count">{this.state.count} users online</p>
+          <p className="navbar-count">{this.state.count} {userWord} online</p>
         </nav>
         <MessageList 
           messages={this.state.messages} 

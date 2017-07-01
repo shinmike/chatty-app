@@ -11,6 +11,8 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
+const colors = ['#E74C3C', '#E67E22', '#F1C40F', '#27AE60', '#3498DB', '#9B59B6'];
+
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
@@ -19,17 +21,24 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
-function broadcast() {
+function broadcastUser() {
+  let color = colors[Math.floor(Math.random()*colors.length)];
   let userCount = {
     type: 'clientCount',
-    count: wss.clients.size
+    count: wss.clients.size,
+    color: color
   }
   wss.broadcast(JSON.stringify(userCount));
 }
 
+// function assignColor(ws) {
+
+// }
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  broadcast();
+  broadcastUser();
+  // assignColor(ws);
 
   ws.on('message', (message) => {
     const newMessage = JSON.parse(message);
@@ -49,6 +58,6 @@ wss.on('connection', (ws) => {
   
   ws.on('close', () => {
     console.log('Client disconnected');
-    broadcast();
+    broadcastUser();
   });
 });
